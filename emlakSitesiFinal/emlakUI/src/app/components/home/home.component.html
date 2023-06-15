@@ -1,0 +1,15 @@
+<div class="container">
+    <div *ngFor="let ilan of ilanlar">
+        <h1>{{ilan.Baslik}}</h1>
+        <p>
+            <b>Kategori : </b><a href="#" [routerLink]="['/kategori',ilan.KategoriId]"> {{ilan.KategoriAdi}}</a>
+            &nbsp;&nbsp;
+            <b>Tarih : </b> {{ilan.Tarih}} &nbsp;&nbsp;
+            <b>Yazan : </b><a href="#" [routerLink]="['/uyeilan',ilan.UyeId]"> {{ilan.UyeKadi}}</a> &nbsp;&nbsp;
+            <b>OKunma: </b>{{ilan.Okunma}} &nbsp;
+            <a href="#" [routerLink]="['/ilan',ilan.IlanId]">İlana Bak</a>
+        </p>
+        <hr>
+    </div>
+
+</div>

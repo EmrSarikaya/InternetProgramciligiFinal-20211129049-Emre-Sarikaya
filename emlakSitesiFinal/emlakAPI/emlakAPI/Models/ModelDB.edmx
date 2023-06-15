@@ -1,0 +1,319 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DBfinalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ilan">
+          <Key>
+            <PropertyRef Name="IlanId" />
+          </Key>
+          <Property Name="IlanId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Baslik" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Icerik" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Foto" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Tarih" Type="datetime" Nullable="false" />
+          <Property Name="KategoriId" Type="int" Nullable="false" />
+          <Property Name="UyeId" Type="int" Nullable="false" />
+          <Property Name="Okunma" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kategori">
+          <Key>
+            <PropertyRef Name="KategoriId" />
+          </Key>
+          <Property Name="KategoriId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KategoriAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Uye">
+          <Key>
+            <PropertyRef Name="UyeId" />
+          </Key>
+          <Property Name="UyeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KullaniciAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sifre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AdSoyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Foto" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UyeAdmin" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Yorum">
+          <Key>
+            <PropertyRef Name="YorumId" />
+          </Key>
+          <Property Name="YorumId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YorumIcerik" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="UyeId" Type="int" Nullable="false" />
+          <Property Name="IlanId" Type="int" Nullable="false" />
+          <Property Name="Tarih" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Ilan_ToKategori">
+          <End Role="Kategori" Type="Self.Kategori" Multiplicity="1" />
+          <End Role="Ilan" Type="Self.Ilan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategori">
+              <PropertyRef Name="KategoriId" />
+            </Principal>
+            <Dependent Role="Ilan">
+              <PropertyRef Name="KategoriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ilan_ToUye">
+          <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
+          <End Role="Ilan" Type="Self.Ilan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uye">
+              <PropertyRef Name="UyeId" />
+            </Principal>
+            <Dependent Role="Ilan">
+              <PropertyRef Name="UyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_ToIlan">
+          <End Role="Ilan" Type="Self.Ilan" Multiplicity="1" />
+          <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ilan">
+              <PropertyRef Name="IlanId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="IlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_ToUye">
+          <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
+          <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uye">
+              <PropertyRef Name="UyeId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="UyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBfinalModelStoreContainer">
+          <EntitySet Name="Ilan" EntityType="Self.Ilan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kategori" EntityType="Self.Kategori" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Uye" EntityType="Self.Uye" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Yorum" EntityType="Self.Yorum" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Ilan_ToKategori" Association="Self.FK_Ilan_ToKategori">
+            <End Role="Kategori" EntitySet="Kategori" />
+            <End Role="Ilan" EntitySet="Ilan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ilan_ToUye" Association="Self.FK_Ilan_ToUye">
+            <End Role="Uye" EntitySet="Uye" />
+            <End Role="Ilan" EntitySet="Ilan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_ToIlan" Association="Self.FK_Yorum_ToIlan">
+            <End Role="Ilan" EntitySet="Ilan" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_ToUye" Association="Self.FK_Yorum_ToUye">
+            <End Role="Uye" EntitySet="Uye" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBfinalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DBfinalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ilan" EntityType="DBfinalModel.Ilan" />
+          <EntitySet Name="Kategori" EntityType="DBfinalModel.Kategori" />
+          <EntitySet Name="Uye" EntityType="DBfinalModel.Uye" />
+          <EntitySet Name="Yorum" EntityType="DBfinalModel.Yorum" />
+          <AssociationSet Name="FK_Ilan_ToKategori" Association="DBfinalModel.FK_Ilan_ToKategori">
+            <End Role="Kategori" EntitySet="Kategori" />
+            <End Role="Ilan" EntitySet="Ilan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ilan_ToUye" Association="DBfinalModel.FK_Ilan_ToUye">
+            <End Role="Uye" EntitySet="Uye" />
+            <End Role="Ilan" EntitySet="Ilan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_ToIlan" Association="DBfinalModel.FK_Yorum_ToIlan">
+            <End Role="Ilan" EntitySet="Ilan" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_ToUye" Association="DBfinalModel.FK_Yorum_ToUye">
+            <End Role="Uye" EntitySet="Uye" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Ilan">
+          <Key>
+            <PropertyRef Name="IlanId" />
+          </Key>
+          <Property Name="IlanId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Baslik" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Icerik" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Foto" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="KategoriId" Type="Int32" Nullable="false" />
+          <Property Name="UyeId" Type="Int32" Nullable="false" />
+          <Property Name="Okunma" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Kategori" Relationship="DBfinalModel.FK_Ilan_ToKategori" FromRole="Ilan" ToRole="Kategori" />
+          <NavigationProperty Name="Uye" Relationship="DBfinalModel.FK_Ilan_ToUye" FromRole="Ilan" ToRole="Uye" />
+          <NavigationProperty Name="Yorum" Relationship="DBfinalModel.FK_Yorum_ToIlan" FromRole="Ilan" ToRole="Yorum" />
+        </EntityType>
+        <EntityType Name="Kategori">
+          <Key>
+            <PropertyRef Name="KategoriId" />
+          </Key>
+          <Property Name="KategoriId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KategoriAdi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ilan" Relationship="DBfinalModel.FK_Ilan_ToKategori" FromRole="Kategori" ToRole="Ilan" />
+        </EntityType>
+        <EntityType Name="Uye">
+          <Key>
+            <PropertyRef Name="UyeId" />
+          </Key>
+          <Property Name="UyeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KullaniciAdi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sifre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AdSoyad" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Foto" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UyeAdmin" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ilan" Relationship="DBfinalModel.FK_Ilan_ToUye" FromRole="Uye" ToRole="Ilan" />
+          <NavigationProperty Name="Yorum" Relationship="DBfinalModel.FK_Yorum_ToUye" FromRole="Uye" ToRole="Yorum" />
+        </EntityType>
+        <EntityType Name="Yorum">
+          <Key>
+            <PropertyRef Name="YorumId" />
+          </Key>
+          <Property Name="YorumId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YorumIcerik" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="UyeId" Type="Int32" Nullable="false" />
+          <Property Name="IlanId" Type="Int32" Nullable="false" />
+          <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Ilan" Relationship="DBfinalModel.FK_Yorum_ToIlan" FromRole="Yorum" ToRole="Ilan" />
+          <NavigationProperty Name="Uye" Relationship="DBfinalModel.FK_Yorum_ToUye" FromRole="Yorum" ToRole="Uye" />
+        </EntityType>
+        <Association Name="FK_Ilan_ToKategori">
+          <End Type="DBfinalModel.Kategori" Role="Kategori" Multiplicity="1" />
+          <End Type="DBfinalModel.Ilan" Role="Ilan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategori">
+              <PropertyRef Name="KategoriId" />
+            </Principal>
+            <Dependent Role="Ilan">
+              <PropertyRef Name="KategoriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ilan_ToUye">
+          <End Type="DBfinalModel.Uye" Role="Uye" Multiplicity="1" />
+          <End Type="DBfinalModel.Ilan" Role="Ilan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uye">
+              <PropertyRef Name="UyeId" />
+            </Principal>
+            <Dependent Role="Ilan">
+              <PropertyRef Name="UyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_ToIlan">
+          <End Type="DBfinalModel.Ilan" Role="Ilan" Multiplicity="1" />
+          <End Type="DBfinalModel.Yorum" Role="Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ilan">
+              <PropertyRef Name="IlanId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="IlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_ToUye">
+          <End Type="DBfinalModel.Uye" Role="Uye" Multiplicity="1" />
+          <End Type="DBfinalModel.Yorum" Role="Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uye">
+              <PropertyRef Name="UyeId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="UyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBfinalModelStoreContainer" CdmEntityContainer="DBfinalEntities">
+          <EntitySetMapping Name="Ilan">
+            <EntityTypeMapping TypeName="DBfinalModel.Ilan">
+              <MappingFragment StoreEntitySet="Ilan">
+                <ScalarProperty Name="Okunma" ColumnName="Okunma" />
+                <ScalarProperty Name="UyeId" ColumnName="UyeId" />
+                <ScalarProperty Name="KategoriId" ColumnName="KategoriId" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="Foto" ColumnName="Foto" />
+                <ScalarProperty Name="Icerik" ColumnName="Icerik" />
+                <ScalarProperty Name="Baslik" ColumnName="Baslik" />
+                <ScalarProperty Name="IlanId" ColumnName="IlanId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kategori">
+            <EntityTypeMapping TypeName="DBfinalModel.Kategori">
+              <MappingFragment StoreEntitySet="Kategori">
+                <ScalarProperty Name="KategoriAdi" ColumnName="KategoriAdi" />
+                <ScalarProperty Name="KategoriId" ColumnName="KategoriId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uye">
+            <EntityTypeMapping TypeName="DBfinalModel.Uye">
+              <MappingFragment StoreEntitySet="Uye">
+                <ScalarProperty Name="UyeAdmin" ColumnName="UyeAdmin" />
+                <ScalarProperty Name="Foto" ColumnName="Foto" />
+                <ScalarProperty Name="AdSoyad" ColumnName="AdSoyad" />
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="KullaniciAdi" ColumnName="KullaniciAdi" />
+                <ScalarProperty Name="UyeId" ColumnName="UyeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Yorum">
+            <EntityTypeMapping TypeName="DBfinalModel.Yorum">
+              <MappingFragment StoreEntitySet="Yorum">
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="IlanId" ColumnName="IlanId" />
+                <ScalarProperty Name="UyeId" ColumnName="UyeId" />
+                <ScalarProperty Name="YorumIcerik" ColumnName="YorumIcerik" />
+                <ScalarProperty Name="YorumId" ColumnName="YorumId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
